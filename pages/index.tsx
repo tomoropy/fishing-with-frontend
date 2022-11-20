@@ -2,14 +2,14 @@ import { GetServerSideProps, NextPage } from "next";
 import { API_URL } from "../config/config";
 
 interface User {
-  id: number,
-  name: string,
-  profileText: string,
-  profileImage: string,
-  headerImage: string,
-  createdAt: string
-  email: String,
-} 
+  id: number;
+  name: string;
+  profileText: string;
+  profileImage: string;
+  headerImage: string;
+  createdAt: string;
+  email: String;
+}
 
 const IndexPage: NextPage = (props: any) => {
   const users: User[] = props.users;
@@ -25,9 +25,9 @@ const IndexPage: NextPage = (props: any) => {
       ))}
     </>
   );
-}
+};
 
-export default IndexPage
+export default IndexPage;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // Fetch user
@@ -37,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: { users },
   };
-}
+};
