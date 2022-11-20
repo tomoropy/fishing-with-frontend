@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import { API_URL } from "../config/config";
+import { API_URL } from "../config";
 
 interface User {
   id: number;

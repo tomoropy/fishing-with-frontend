@@ -8,16 +8,18 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../context/AuthContext.js";
 
 const SignUpPage = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [profileText, setProfileText] = useState("");
 
-  // const { register, error } = useContext(AuthContext);
+  const { register, error } = useContext(AuthContext);
 
-  // useEffect(() => error && toast.error(error));
+  useEffect(() => {error && toast.error(error)});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const SignUpPage = () => {
       return;
     }
 
-    // register({ username, email, password });
+    register({ name, email, password, profileText });
   };
 
   return (
@@ -65,17 +67,17 @@ const SignUpPage = () => {
             <TextField
               label="パスワード (確認)"
               type="password"
-              id="password"
-              value={password}
+              id="passwordConfirm"
+              value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
           </Grid>
           <Grid item xs={8}>
             <TextField
               label="ユーザーネーム"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </Grid>
           <Grid item xs={8}>
@@ -84,6 +86,10 @@ const SignUpPage = () => {
               minRows={7}
               placeholder="自己紹介文"
               style={{ width: 400 }}
+              id="profileText"
+              value={profileText}
+              onChange={(e) => setProfileText(e.target.value)
+            }
             />
           </Grid>
           <Grid item xs={8}>

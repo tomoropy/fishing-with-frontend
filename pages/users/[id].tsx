@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import { API_URL } from "../../config/config";
+import { API_URL } from "../../config";
 import { User } from "../../types/user";
 
 const UserPage: NextPage = (props: any) => {
