@@ -19,13 +19,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
       }),
     });
 
-    const data = await apiRes.json();
-
-    // // signupに失敗した場合
-    // if (!apiRes.ok) {
-    //   console.log("api response is bad pattern");
-    //   res.status(apiRes.status).json(data.error);
-    // }
+      const data = await apiRes.json();
 
     if (apiRes.ok) {
       // Set Cookie
@@ -39,11 +33,12 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
           path: "/",
         })
       );
-
-      res.status(200).json(data);
-      console.log("ststus ok!!!!!!!!!!!!!!!!!!!");
+      
+      // console.log(data);
+      res.status(200).json({user: data});
+    // apiResのstatusCodeが異常値の場合
     } else {
-      res.status(apiRes.status).json(data.error);
+      res.status(apiRes.status).json({message: data});
     }
   } else {
     res.setHeader("Allow", ["POST"]);

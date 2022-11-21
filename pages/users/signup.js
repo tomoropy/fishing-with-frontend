@@ -1,11 +1,6 @@
-import {
-  Button,
-  FormGroup,
-  Grid,
-  TextareaAutosize,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, TextareaAutosize, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext.js";
@@ -17,9 +12,11 @@ const SignUpPage = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [profileText, setProfileText] = useState("");
 
-  const { register, error } = useContext(AuthContext);
+  const { register, error, setError } = useContext(AuthContext);
 
-  useEffect(() => {error && toast.error(error)});
+  useEffect(() => {
+    if (error !== "") toast.error(error);
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +27,7 @@ const SignUpPage = () => {
     }
 
     register({ name, email, password, profileText });
+    setError("")
   };
 
   return (
@@ -88,8 +86,7 @@ const SignUpPage = () => {
               style={{ width: 400 }}
               id="profileText"
               value={profileText}
-              onChange={(e) => setProfileText(e.target.value)
-            }
+              onChange={(e) => setProfileText(e.target.value)}
             />
           </Grid>
           <Grid item xs={8}>
