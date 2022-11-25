@@ -15,7 +15,7 @@ const IndexPage: NextPage = (props: any) => {
   const users: User[] = props.users;
   return (
     <>
-      <h1> tihs is User Page</h1>
+      <h1> tihs is Users Page</h1>
       {users.map((user: User) => (
         <div key={user.id}>
           <p>{user.name}</p>

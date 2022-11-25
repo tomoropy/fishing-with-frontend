@@ -19,13 +19,13 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
       }),
     });
 
-      const data = await apiRes.json();
+    const data = await apiRes.json();
 
     if (apiRes.ok) {
       // Set Cookie
       res.setHeader(
         "Set-Cookie",
-        cookie.serialize("token", data.paseto, {
+        cookie.serialize("token", data.access_token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           maxAge: 60 * 60 * 24 * 7, // 1 week
@@ -33,12 +33,10 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
           path: "/",
         })
       );
-      
-      // console.log(data);
-      res.status(200).json({user: data});
-    // apiResのstatusCodeが異常値の場合
+
+      res.status(200).json({ user: data });
     } else {
-      res.status(apiRes.status).json({message: data});
+      res.status(apiRes.status).json({ message: data });
     }
   } else {
     res.setHeader("Allow", ["POST"]);

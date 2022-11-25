@@ -3,7 +3,6 @@ import cookie from "cookie";
 import { API_URL } from "../../config/index";
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
-
   if (req.method === "POST") {
     const { name, password } = req.body;
 
@@ -24,7 +23,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
       // Set Cookie
       res.setHeader(
         "Set-Cookie",
-        cookie.serialize("token", data.paseto, {
+        cookie.serialize("token", data.access_token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           maxAge: 60 * 60 * 24 * 7, // 1 week

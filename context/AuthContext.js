@@ -1,12 +1,13 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { NEXT_URL } from "../config/index.js";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -28,9 +29,9 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       setUser(data.user);
-      router.push(`/users/${data.user.id}`);
+      router.push(`/users/mypage`);
     } else {
-      setError(data.message.error)
+      setError(data.message.error);
     }
   };
 
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({
         name,
-        password
+        password,
       }),
     });
 
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       setUser(data.user.user);
-      router.push(`/users/${data.user.user.id}`);
+      router.push(`/users/mypage`);
     } else {
       setError(data.message.error);
     }
@@ -64,25 +65,57 @@ export const AuthProvider = ({ children }) => {
     });
 
     if (res.ok) {
-      setUser(null);
+      setUser({});
+      router.push("/");
+    }
+    setLoading(false);
+  };
+
+  // Delete user
+  const remove = async () => {
+    const res = await fetch(`${NEXT_URL}/api/remove`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.ok) {
+      setUser({});
       router.push("/");
     }
   };
 
   // Check if user is logged in
   const checkUserLoggedIn = async (user) => {
+    setLoading(true)
     const res = await fetch(`${NEXT_URL}/api/user`);
     const data = await res.json();
 
     if (res.ok) {
       setUser(data.user);
     } else {
-      setUser(null);
+      setUser({});
+      router.push("/users/login");
     }
+    setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, error, setError, register, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        error,
+        setError,
+        register,
+        login,
+        logout,
+        remove,
+        loading,
+        setLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
