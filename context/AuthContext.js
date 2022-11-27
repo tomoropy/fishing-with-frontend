@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
     } else {
       setUser({});
-      router.push("/users/login");
+      // router.push("/users/login");
     }
     setLoading(false);
   };

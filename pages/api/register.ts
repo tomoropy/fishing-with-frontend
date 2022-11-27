@@ -4,7 +4,7 @@ import { API_URL } from "../../config/index";
 
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    const { name, email, password, profileText } = req.body;
+    const { name, email, password } = req.body;
 
     const apiRes = await fetch(`${API_URL}/users`, {
       method: "POST",
@@ -15,7 +15,6 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
         name,
         email,
         password,
-        profileText,
       }),
     });
 
