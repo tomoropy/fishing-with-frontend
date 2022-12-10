@@ -1,5 +1,10 @@
 import * as React from "react";
-import { styled, createTheme, ThemeProvider, alpha } from "@mui/material/styles";
+import {
+  styled,
+  createTheme,
+  ThemeProvider,
+  alpha,
+} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -13,12 +18,11 @@ import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import { ListItems } from "./listItems";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Copyright from "../CopyRight";
-
-
+import { Container } from "@mui/material";
 
 // -------------------[MUI CSS-------------------]
 
@@ -114,11 +118,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // -------------------[MUI CSS-------------------]
 
-
-
 const mdTheme = createTheme();
 
-function DashboardContent() {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const DashBoard = ({ children }: Props) => {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -186,9 +192,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            <ListItems />
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
@@ -204,9 +210,10 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart 
+          <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+            {children}
+            {/* <Grid container spacing={3}>
+              Chart 
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -238,15 +245,11 @@ function DashboardContent() {
                   <Orders />
                 </Paper>
               </Grid>
-            </Grid>
-           </Container> */}
+                </Grid> */}
+          </Container>
           <Copyright sx={{ pt: 4 }} />
         </Box>
       </Box>
     </ThemeProvider>
   );
-}
-
-export default function Dashboard() {
-  return <DashboardContent />;
-}
+};

@@ -108,7 +108,6 @@ const LoginPage: NextPage = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 10}}/>
       </Container>
     </ThemeProvider>
   );
